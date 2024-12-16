@@ -17,8 +17,11 @@ fi
 
 # Extract the VerusCoin package
 echo "Extracting VerusCoin..."
-tar -xvzf veruscoin-v1.2.6.tar.gz
-cd VerusCoin-1.2.6
+mkdir veruscoin-v1.2.6-extracted
+tar -xvzf veruscoin-v1.2.6.tar.gz -C veruscoin-v1.2.6-extracted
+
+# Change to the extracted directory
+cd veruscoin-v1.2.6-extracted/VerusCoin-1.2.6
 
 # Check if the extraction was successful
 if [ ! -d "VerusCoin-1.2.6" ]; then

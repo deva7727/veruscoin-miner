@@ -3,7 +3,7 @@
 # Update and install dependencies
 echo "Updating system and installing dependencies..."
 sudo apt update -y && sudo apt upgrade -y
-sudo apt install wget unzip tar -y
+sudo apt install wget unzip tar build-essential -y  # Added build-essential for compiling dependencies
 
 # Download VerusCoin Source
 echo "Downloading VerusCoin source code..."
@@ -26,6 +26,16 @@ if [ ! -d "VerusCoin-1.2.6" ]; then
     exit 1
 fi
 
+# Build VerusCoin (if it's not already built)
+echo "Building VerusCoin..."
+make -j$(nproc)  # Compile using all available cores
+
+# Check if the build was successful
+if [ ! -f "./verus" ]; then
+    echo "Miner executable 'verus' not found after build. Exiting..."
+    exit 1
+fi
+
 # Set Mining Pool and Wallet
 POOL="stratum+tcp://verushash.mine.zergpool.com:3300"
 WALLET="RPXEmxhopTAwM8rkNs3Mx21qnBjbjiQY1f"  # Replace with your VerusCoin wallet address
@@ -35,13 +45,8 @@ WORKER_NAME="colab_worker"
 CPU_CORES=$(nproc)  # Automatically detects the number of CPU cores
 THREADS=$((CPU_CORES / 2))  # Use half of the available cores for mining, adjust as necessary
 
-# Verify that the "verus" binary exists and is executable
-if [ ! -f "./verus" ]; then
-    echo "Miner executable 'verus' not found. Make sure the extraction was correct. Exiting..."
-    exit 1
-fi
-
-chmod +x verus  # Ensure the 'verus' file is executable
+# Ensure that the "verus" binary is executable
+chmod +x verus  # Make sure 'verus' is executable
 
 # Start Mining
 echo "Starting VerusCoin mining with $THREADS threads..."

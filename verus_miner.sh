@@ -16,7 +16,7 @@ cd verusminer
 
 # Set Mining Pool and Wallet
 POOL="stratum+tcp://verushash.mine.zergpool.com:3300"
-WALLET="YOUR_VRSC_WALLET_ADDRESS"  # Replace with your VerusCoin wallet address
+WALLET="RPXEmxhopTAwM8rkNs3Mx21qnBjbjiQY1f"  # Replace with your VerusCoin wallet address
 WORKER_NAME="colab_worker"
 
 # Start Mining
